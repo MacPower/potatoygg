@@ -21,7 +21,6 @@ class YGG(TorrentProvider, MovieProvider):
     """
 
     url_scheme = 'https'
-    url_hostname = 'www9.yggtorrent.to'
     limit = 50
     http_time_between_calls = 0
 
@@ -31,26 +30,28 @@ class YGG(TorrentProvider, MovieProvider):
         """
         TorrentProvider.__init__(self)
         MovieProvider.__init__(self)
+        url_hostname = self.conf("url_hostname")
+        
         self.urls = {
-            'login': YGG.getBasePath() + '/user/login',
-            'login_check': YGG.getBasePath() + '/user/account',
-            'search': YGG.getBasePath() + '/engine/search?{}',
-            'torrent': YGG.getBasePath() + '/torrent',
-            'url': YGG.getBasePath() + '/engine/download_torrent?id={}'
+            'login': YGG.getBasePath(url_hostname) + '/user/login',
+            'login_check': YGG.getBasePath(url_hostname) + '/user/account',
+            'search': YGG.getBasePath(url_hostname) + '/engine/search?{}',
+            'torrent': YGG.getBasePath(url_hostname) + '/torrent',
+            'url': YGG.getBasePath(url_hostname) + '/engine/download_torrent?id={}'
         }
         self.size_gb.append('go')
         self.size_mb.append('mo')
         self.size_kb.append('ko')
 
     @staticmethod
-    def getBasePath():
+    def getBasePath(url_hostname):
         """
         Get YGG's base path URL.
 
         :return: YGG's base path URL
         :rtype: str
         """
-        return '{}://{}'.format(YGG.url_scheme, YGG.url_hostname)
+        return '{}://{}'.format(YGG.url_scheme, url_hostname)
 
     @staticmethod
     def parseText(node):

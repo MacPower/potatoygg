@@ -41,6 +41,11 @@ config = [{
                     'default': False
                 },
                 {
+                    'name': 'url_hostname',
+                    'default': 'www9.yggtorrent.to',
+                    'type': 'string',
+                },
+                {
                     'name': 'username',
                     'default': ''
                 },
